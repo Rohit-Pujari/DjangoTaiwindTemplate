@@ -1,3 +1,3 @@
 # Full-Stack
-This is my first FullStack Project using Django framework , i might use REACT in future
+This is repo acts as a template for my Django projects which require tailwind,it has tailwind configured with Django 
 Requires:python 3.12.1

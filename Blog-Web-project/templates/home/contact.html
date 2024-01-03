@@ -1,3 +1,28 @@
 {% extends "base.html" %}
 {% block title %}contact{% endblock title %}
-{% block body %}Contact body{% endblock body %}
+{% block activecontact %}active{% endblock activecontact %}
+{% block body %}
+<div class="container">
+    <h3 class="my-2 mx-2">Contact Blogit Maintainers </h3>
+    <form method='post' action="/contact">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="inputname" class="form-label">Name</label>
+            <input type="text" class="form-control" id="name" >
+        </div>
+        <div class="mb-3">
+            <label for="inputemial" class="form-label">Email:</label>
+            <input type="email" class="form-control" id="Email">
+        </div>
+        <div class="mb-3">
+            <label for="inputphonenumber" class="form-label">Phone.no:</label>
+            <input type="Phone.no" class="form-control" id="Phonenumberl">
+        </div>
+        <div class="mb-3">
+            <label for="issue" class="form-label">Describe your issue:</label>
+            <textarea id="content" class="form-control" placeholder="Describe your issue here" cols="30" rows="5"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+{% endblock body %}

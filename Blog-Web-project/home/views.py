@@ -41,7 +41,7 @@ def search(request):
         allpost_content = Post.objects.filter(content__icontains=query)
         allposts = allposts_title.union(allposts_author,allpost_content)
 
-    if allposts.count == 0:
+    if allposts.count() == 0:
         messages.warning(request,"Invalid Search")
     context = {"allposts":allposts,
                "query":query}

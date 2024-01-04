@@ -8,19 +8,19 @@
         {% csrf_token %}
         <div class="mb-3">
             <label for="inputname" class="form-label">Name</label>
-            <input type="text" class="form-control" id="name" >
+            <input type="text" class="form-control" id="name" name="name" >
         </div>
         <div class="mb-3">
             <label for="inputemial" class="form-label">Email:</label>
-            <input type="email" class="form-control" id="Email">
+            <input type="email" class="form-control" id="email" name="email">
         </div>
         <div class="mb-3">
             <label for="inputphonenumber" class="form-label">Phone.no:</label>
-            <input type="Phone.no" class="form-control" id="Phonenumberl">
+            <input type="Phone.no" class="form-control" id="phonenumber" name="phonenumber">
         </div>
         <div class="mb-3">
             <label for="issue" class="form-label">Describe your issue:</label>
-            <textarea id="content" class="form-control" placeholder="Describe your issue here" cols="30" rows="5"></textarea>
+            <textarea id="content" class="form-control" placeholder="Describe your issue here" cols="30" rows="5" name="content"></textarea>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>

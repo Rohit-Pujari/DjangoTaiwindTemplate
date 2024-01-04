@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Search={{query}}{% endblock title %}
+{% block activeblog %}active{% endblock activeblog %}
+{% block body %}
+{% if  allposts|length < 1%}
+    <h3>No Search results for:{{query}}</h3>
+{% else  %}
+    <div class="container">
+        <h3>Search resluts for :{{query}}</h3>
+        {% for post in allposts  %}
+        <div class="container-fluid">
+            <div class="col-md-6">
+                <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                    <div class="col p-4 d-flex flex-column position-static">
+                        <strong class="d-inline-block mb-2 text-primary-emphasis">Blog by {{post.author}}</strong>
+                        <h3 class="mb-0">{{post.title}}</h3>
+                        <div class="mb-1 text-muted">{{post.timestamp}}</div>
+                        <p class="card-text mb-auto">{{post.content | truncatechars:50}}</p>
+                        <a href="blog/{{post.slug}}"  role="button" class="btn btn-primary my-2">Continue reading</a>
+                    </div>
+            </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endif %}
+{% endblock body %}

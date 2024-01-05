@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect,HttpResponse
 from . models import Contact
 from django.contrib import messages
 from blog.models import Post
+from django.contrib.auth.models import User,auth
 # Create your views here.
 def home(request):
     return render(request, "home/home.html")
@@ -46,3 +47,47 @@ def search(request):
     context = {"allposts":allposts,
                "query":query}
     return render(request, "home/search.html",context)
+
+def signup(request):
+    if request.method == "POST":
+        firstname = request.POST.get('firstName')
+        lastname = request.POST.get('lastName')
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        password1 = request.POST.get('password1')
+        password2 = request.POST.get('password2')
+        if password1 == password2:
+            if User.objects.filter(username=username).exists():
+                return messages.error(request,"Username already taken")
+            elif User.objects.filter(email=email).exists():
+                return messages.error(request,"Email already exists")
+            else:
+                user = User.objects.create(username=username, email=email, password=password1,first_name=firstname,last_name=lastname)
+                user.save();
+                messages.success(request,"Your account has been created successfully, please login")
+                return redirect("/")
+        else:
+            messages.error(request,"Check your password")
+            return redirect("/")
+    else:
+        return redirect("/")
+
+
+def login(request):
+    if request.method == "POST":
+        userName = request.POST.get('username')
+        passwd = request.POST.get('password')
+        user = auth.authenticate(username=userName, password=passwd)
+        print(user,userName,passwd)
+        if user is not None:
+            auth.login(request, user);
+            messages.success(request,"You have successfully logged in")
+            return redirect("/")
+        else:
+            messages.error(request,"Username or password is incorrect")
+            return redirect("/")
+    return redirect("/")
+def logout(request):
+    auth.logout(request);
+    messages.success(request,"Successfully logged out")
+    return redirect("/")

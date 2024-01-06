@@ -2,7 +2,8 @@ from django.shortcuts import render,redirect,HttpResponse
 from . models import Contact
 from django.contrib import messages
 from blog.models import Post
-from django.contrib.auth.models import User,auth
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate,login,logout
 # Create your views here.
 def home(request):
     return render(request, "home/home.html")
@@ -56,38 +57,45 @@ def signup(request):
         email = request.POST.get('email')
         password1 = request.POST.get('password1')
         password2 = request.POST.get('password2')
-        if password1 == password2:
-            if User.objects.filter(username=username).exists():
-                return messages.error(request,"Username already taken")
-            elif User.objects.filter(email=email).exists():
-                return messages.error(request,"Email already exists")
-            else:
-                user = User.objects.create(username=username, email=email, password=password1,first_name=firstname,last_name=lastname)
-                user.save();
-                messages.success(request,"Your account has been created successfully, please login")
-                return redirect("/")
-        else:
-            messages.error(request,"Check your password")
+        if len(password1) < 5:
+            messages.warning(request,"password must be at least 5 characters long")
             return redirect("/")
+        if User.objects.filter(username=username).exists():
+            messages.error(request,"Username already taken")
+            return redirect("/")
+        if User.objects.filter(email=email).exists():
+            messages.error(request,"Email already exists")
+            return redirect("/")        
+        if password1 != password2:
+            messages.error(request,"Password must match")
+            return redirect("/")
+        print(username,password1,password2)
+        user = User.objects.create_user(username=username, email=email, password=password2,first_name=firstname,last_name=lastname)
+        user.save();
+        messages.success(request,"Your account has been created successfully, please login")
+        return redirect("/")
     else:
+        messages.error(request," can not do empty SignUp submission")
         return redirect("/")
 
 
-def login(request):
+def handlelogin(request):
     if request.method == "POST":
-        userName = request.POST.get('username')
-        passwd = request.POST.get('password')
-        user = auth.authenticate(username=userName, password=passwd)
-        print(user,userName,passwd)
+        loginusername = request.POST.get('loginusername')
+        loginpassword = request.POST.get('loginpassword')
+        user = authenticate(username=loginusername, password=loginpassword)
+        print(user,loginpassword,loginusername)
         if user is not None:
-            auth.login(request, user);
+            login(request, user);
             messages.success(request,"You have successfully logged in")
             return redirect("/")
         else:
             messages.error(request,"Username or password is incorrect")
             return redirect("/")
     return redirect("/")
-def logout(request):
-    auth.logout(request);
+
+
+def handlelogout(request):
+    logout(request);
     messages.success(request,"Successfully logged out")
     return redirect("/")

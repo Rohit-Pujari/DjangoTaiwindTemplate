@@ -76,27 +76,27 @@
             {% csrf_token %}
             <div class="mb-3">
               <label for="firstName" class="form-label">First Name</label>
-              <input type="text" class="form-control" id="firstName" aria-describedby="firstName" name="firstName" placeholder="First Name">
+              <input type="text" class="form-control" id="firstName" aria-describedby="firstName" name="firstName" placeholder="First Name" required>
             </div>
             <div class="mb-3">
               <label for="lastName" class="form-label">Last Name</label>
-              <input type="text" class="form-control" id="lastName" aria-describedby="lastName" name="lastName" placeholder="Last Name">
+              <input type="text" class="form-control" id="lastName" aria-describedby="lastName" name="lastName" placeholder="Last Name" required>
             </div>
             <div class="mb-3">
               <label for="userName" class="form-label">Username</label>
-              <input type="text" class="form-control" id="userName" aria-describedby="userName" name="username" placeholder="Username must be unique">
+              <input type="text" class="form-control" id="userName" aria-describedby="userName" name="username" placeholder="Username must be unique" required>
             </div>
             <div class="mb-3">
               <label for="email" class="form-label">Email address</label>
-              <input type="email" class="form-control" id="email" aria-describedby="email" name="email" placeholder="name@gmail.com">
+              <input type="email" class="form-control" id="email" aria-describedby="email" name="email" placeholder="name@gmail.com" required>
             </div>
             <div class="mb-3">
               <label for="password" class="form-label">Password</label>
-              <input type="password" class="form-control fa fa-eye-slash" id="password1" name="password1" placeholder="Password">
+              <input type="password" class="form-control fa fa-eye-slash" id="password1" name="password1" placeholder="Password" required>
             </div>
             <div class="mb-3">
               <label for="password" class="form-label">Confirm Password</label>
-              <input type="password" class="form-control fa fa-eye-slash" id="password2" name="password2" placeholder="Confirm Password">
+              <input type="password" class="form-control fa fa-eye-slash" id="password2" name="password2" placeholder="Confirm Password" required>
             </div>            
               <button type="submit" class="btn btn-primary m-2 ">Submit</button>
         </div>
@@ -116,12 +116,12 @@
           <form method="post" action="/login">
             {% csrf_token %}
             <div class="mb-3">
-              <label for="username" class="form-label">Username</label>
-              <input type="text" class="form-control" id="username" aria-describedby="username" name="username" placeholder="Username">
+              <label for="loginusername" class="form-label">Username</label>
+              <input type="text" class="form-control" id="loginusername" aria-describedby="loginusername" name="loginusername" placeholder="Username" required>
             </div>
             <div class="mb-3">
-              <label for="password" class="form-label">Password</label>
-              <input type="password" class="form-control fa fa-eye-slash" id="password" name="password" placeholder="Password">
+              <label for="loginpassword" class="form-label">Password</label>
+              <input type="password" class="form-control fa fa-eye-slash" aria-describedby="loginpassword" id="loginpassword" name="loginpassword" placeholder="Password" required>
             </div>            
               <button type="submit" class="btn btn-primary m-2 ">Login!</button>
         </div>

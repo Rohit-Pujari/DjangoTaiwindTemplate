@@ -1,17 +1,38 @@
 {% extends "base.html" %}
+{% load static %} {% load humanize %}
 {% block title %}{{post.slug}}{% endblock title %}
 {% block activeblog %}active{% endblock activeblog %}
 {% block body %}
-<div class="container-fluid">
-  <div class="col-md-8">
+<div class="container">
+  <div class="col-md-3">
     <h3 class="pb-4 mb-4 fst-italic border-bottom">Blog by {{post.author}}</h3>
     <article class="blog-post">
       <h2 class="display-5 link-body-emphasis mb-1">{{post.title}}</h2>
       <p class="blog-post-meta">{{post.timestamp}}</p>
     </article>
   </div>
-  <div>
-    <p>{{post.content}}<p>
+  <div class="col-md-25 m-auto border-bottom">
+    <p>{{post.content}}
+    <p>
   </div>
-</div>
-{% endblock body %}
+  <div class="container-fluid border-bottom">
+    <h5>Comments {{comments.count}} </h5>
+    <form action="postComment" method="post">
+      {% csrf_token %}
+      <div class="col-auto border-top">
+        <input name="content" id="content" class="form-control">
+      </div>
+      <input type="hidden" name="postSno" value="{{post.sno}}">
+      <button type="submit" class="btn btn-primary m-2">Submit</button>
+    </form>
+    {% for comment in comments %}
+    <div class="row">
+      <div class="col-md-1"><img class="rounded-circle mx-auto d-block w-100 p-2 border" src={% static "img/defaultuser.jpeg" %}> </div>
+      <div class="col-md-11 ">
+        <div><a href="#" class="text-black text-decoration-none">@{{comment.user.username}}</a> <span class="small text-opacity-10">{{comment.timestamp|naturaltime}}</span></div>
+        <div>{{comment.commentContent}}</div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endblock body %}

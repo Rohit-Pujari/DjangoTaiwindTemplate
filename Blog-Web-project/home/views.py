@@ -6,7 +6,9 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
 # Create your views here.
 def home(request):
-    return render(request, "home/home.html")
+    allblogs = Post.objects.all()
+    blogs = {"allblogs": allblogs}
+    return render(request, "home/home.html",blogs)
 
 
 def about(request):
